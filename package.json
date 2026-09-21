@@ -1,0 +1,21 @@
+{
+  "name": "webar-card-tracking",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:tunnel": "localtunnel --port 5173",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "mind-ar": "^1.2.5",
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
+    "localtunnel": "^2.0.2",
+    "vite": "^5.0.0"
+  }
+}

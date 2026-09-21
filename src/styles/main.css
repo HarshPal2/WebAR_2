@@ -1,0 +1,324 @@
+:root {
+  --bg-dark: #0a0c10;
+  --glass-bg: rgba(18, 22, 32, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --accent-green: #00ff66;
+  --accent-green-glow: rgba(0, 255, 102, 0.3);
+  --accent-amber: #ffaa00;
+  --accent-red: #ff3366;
+  --text-main: #f0f4f8;
+  --text-muted: #94a3b8;
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Fullscreen MindAR container */
+#ar-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  overflow: hidden;
+}
+
+#ar-container video, #ar-container canvas {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Overlay Layouts */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: radial-gradient(circle at center, rgba(15, 23, 42, 0.85) 0%, rgba(10, 12, 16, 0.95) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 1.5rem;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Glass Card */
+.card-glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 102, 0.05);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgba(0, 255, 102, 0.15);
+  color: var(--accent-green);
+  border: 1px solid rgba(0, 255, 102, 0.3);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+/* Primary Button */
+.btn-primary {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #00ff66 0%, #00cc52 100%);
+  color: #04200e;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  box-shadow: 0 4px 15px var(--accent-green-glow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 8px var(--accent-green-glow);
+}
+
+.btn-primary:disabled {
+  background: #334155;
+  color: #64748b;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-icon {
+  font-size: 1.1rem;
+}
+
+/* Missing Target Warning Banner */
+.banner {
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  text-align: left;
+  margin-bottom: 1.25rem;
+  line-height: 1.4;
+}
+
+.banner.hidden {
+  display: none;
+}
+
+.banner-warning {
+  background: rgba(255, 170, 0, 0.12);
+  border: 1px solid rgba(255, 170, 0, 0.35);
+  color: #ffe099;
+}
+
+.banner-title {
+  font-weight: 700;
+  color: var(--accent-amber);
+  margin-bottom: 0.35rem;
+}
+
+.banner-text code {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.8em;
+  color: #fff;
+}
+
+.banner-text a {
+  color: var(--accent-green);
+  text-decoration: underline;
+}
+
+/* Collapsible Debug Panel */
+.debug-panel {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 100;
+  background: rgba(10, 14, 23, 0.85);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
+  color: var(--text-main);
+  font-size: 0.75rem;
+  width: 220px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.debug-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  user-select: none;
+}
+
+.debug-title {
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.debug-toggle-btn {
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: var(--accent-green);
+}
+
+.debug-content {
+  padding: 0.6rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-height: 200px;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.debug-panel.collapsed .debug-content {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.debug-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.debug-row .label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.debug-val {
+  font-family: monospace;
+  font-weight: 700;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  font-family: monospace;
+}
+
+.status-on {
+  background: rgba(0, 255, 102, 0.2);
+  color: var(--accent-green);
+  border: 1px solid rgba(0, 255, 102, 0.4);
+}
+
+.status-warn {
+  background: rgba(255, 170, 0, 0.2);
+  color: var(--accent-amber);
+  border: 1px solid rgba(255, 170, 0, 0.4);
+}
+
+.status-off {
+  background: rgba(148, 163, 184, 0.15);
+  color: var(--text-muted);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.status-err {
+  background: rgba(255, 51, 102, 0.2);
+  color: var(--accent-red);
+  border: 1px solid rgba(255, 51, 102, 0.4);
+}
+
+.debug-divider {
+  border: none;
+  border-top: 1px solid var(--glass-border);
+  margin: 0.2rem 0;
+}
+
+.text-green {
+  color: var(--accent-green) !important;
+}
+
+.btn-toggle {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.2rem 0.4rem;
+  cursor: pointer;
+  font-family: monospace;
+  transition: all 0.2s ease;
+}
+
+.btn-toggle:active {
+  transform: scale(0.95);
+  background: rgba(0, 255, 102, 0.2);
+}
+
