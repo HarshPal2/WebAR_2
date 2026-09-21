@@ -1,4 +1,5 @@
-node_modules
-dist
-.vercel
-.DS_Store
+node_modules/
+dist/
+.env
+*.pem
+*.key
